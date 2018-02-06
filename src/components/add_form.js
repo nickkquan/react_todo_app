@@ -10,6 +10,7 @@ class AddForm extends Component {
 		};
 
 		this.handleInputChange = this.handleInputChange.bind(this);
+		this.addItem = this.addItem.bind(this);
 	}
 
 	handleInputChange(event) {
@@ -19,12 +20,22 @@ class AddForm extends Component {
 		});
 	}
 
+	addItem(event) {
+		event.preventDefault();
+		console.log("Form values:", this.state);
+		this.props.add(this.state);
+		this.setState({
+			title: "",
+			details: ""
+		});
+	}
+
 	render() {
 		const { title, details } = this.state;
 
 		return (
 			<div className="row">
-				<form className="col s12">
+				<form onSubmit={this.addItem} className="col s12">
 					<div className="row">
 						<div className="input-field col s6">
 							<input
