@@ -14,6 +14,7 @@ class App extends Component {
 			list: todoData
 		};
 		this.addItem = this.addItem.bind(this);
+		this.deleteItem = this.deleteItem.bind(this);
 	}
 
 	addItem(item) {
@@ -22,12 +23,22 @@ class App extends Component {
 		});
 	}
 
+	deleteItem(index) {
+		const newList = this.state.list.slice();
+
+		newList.splice(index, 1);
+
+		this.setState({
+			list: newList
+		});
+	}
+
 	render() {
 		return (
 			<div className="container">
 				<h1 className="center-align">To Do App</h1>
 				<AddForm add={this.addItem} />
-				<ToDoList list={this.state.list} />
+				<ToDoList list={this.state.list} delete={this.deleteItem} />
 			</div>
 		);
 	}
