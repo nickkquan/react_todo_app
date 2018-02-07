@@ -9,7 +9,7 @@ class TodoList extends Component {
 					key={index}
 					title={item.title}
 					delete={() => {
-						this.props.delete(index);
+						this.props.delete(item._id);
 					}}
 				/>
 			);

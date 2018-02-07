@@ -1,36 +1,78 @@
 import React, { Component } from "react";
+import axios from "axios";
+
 import ToDoList from "./todo_list";
 import AddForm from "./add_form";
 
-import todoData from "../assets/data";
-
 import "materialize-css/dist/css/materialize.min.css";
+
+const BASE_URL = "http://api.reactprototypes.com";
+const API_KEY = "?key=nickquan";
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			list: todoData
+			list: []
 		};
 		this.addItem = this.addItem.bind(this);
 		this.deleteItem = this.deleteItem.bind(this);
 	}
 
-	addItem(item) {
-		this.setState({
-			list: [item, ...this.state.list]
-		});
+	componentDidMount() {
+		this.getData();
 	}
 
-	deleteItem(index) {
-		const newList = this.state.list.slice();
+	getData() {
+		axios
+			.get(`${BASE_URL}/todos${API_KEY}`)
+			.then(response => {
+				console.log("Server response:", response.data);
+				this.setState({
+					list: response.data.todos
+				});
+			})
+			.catch(error => {
+				console.log("server error:", error);
+			});
+	}
 
-		newList.splice(index, 1);
+	addItem(item) {
+		axios
+			.post(`${BASE_URL}/todos${API_KEY}`, item)
+			.then(response => {
+				console.log("Server add response:", response);
+				this.getData();
+			})
+			.catch(error => {
+				console.log("Server add error reponse:", error);
+			});
+	}
 
-		this.setState({
-			list: newList
-		});
+	deleteItem(id) {
+		console.log("Delete ID:", id);
+		axios
+			.delete(`${BASE_URL}/todos/${id + API_KEY}`)
+			.then(response => {
+				console.log("Server delete success response", response);
+				this.getData();
+			})
+			.catch(error => {
+				console.log("Server delete error", error);
+			});
+	}
+
+	toggleComplete(id) {
+		axios
+			.put(`{BASE_URL}/todos/${id + API_KEY}`)
+			.then(response => {
+				console.log("Toggle completed success response", response);
+				this.getData();
+			})
+			.catch(error => {
+				console.log("Toggle completed error response:", error);
+			});
 	}
 
 	render() {
