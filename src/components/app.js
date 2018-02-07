@@ -18,6 +18,7 @@ class App extends Component {
 		};
 		this.addItem = this.addItem.bind(this);
 		this.deleteItem = this.deleteItem.bind(this);
+		this.toggleComplete = this.toggleComplete.bind(this);
 	}
 
 	componentDidMount() {
@@ -65,7 +66,7 @@ class App extends Component {
 
 	toggleComplete(id) {
 		axios
-			.put(`{BASE_URL}/todos/${id + API_KEY}`)
+			.put(`${BASE_URL}/todos/${id + API_KEY}`)
 			.then(response => {
 				console.log("Toggle completed success response", response);
 				this.getData();
@@ -80,7 +81,7 @@ class App extends Component {
 			<div className="container">
 				<h1 className="center-align">To Do App</h1>
 				<AddForm add={this.addItem} />
-				<ToDoList list={this.state.list} delete={this.deleteItem} />
+				<ToDoList list={this.state.list} delete={this.deleteItem} toggle={this.toggleComplete} />
 			</div>
 		);
 	}
