@@ -8,8 +8,12 @@ class TodoList extends Component {
 				<ListItem
 					key={index}
 					title={item.title}
+					complete={item.complete}
 					delete={() => {
-						this.props.delete(index);
+						this.props.delete(item._id);
+					}}
+					toggle={() => {
+						this.props.toggle(item._id);
 					}}
 				/>
 			);
