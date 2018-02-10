@@ -57,7 +57,7 @@ class AddForm extends Component {
 						</div>
 					</div>
 					<div className="right-align">
-						<button className="btn blue lighten-2">ADD ITEM</button>
+						<button className="btn blue lighten-1">ADD ITEM</button>
 					</div>
 				</form>
 			</div>
